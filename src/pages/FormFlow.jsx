@@ -130,6 +130,8 @@ const FormFlow = () => {
                         src="https://qytagscqnkioaksbpawc.supabase.co/storage/v1/object/public/livro%20imagens/Logotipo%20Entre%20Letras%20e%20Vinhos.png"
                         alt="Logo"
                         className="logo-img-cover"
+                        fetchpriority="high"
+                        loading="eager"
                     />
 
                     <div style={{ zIndex: 5, marginTop: '1rem' }}>
