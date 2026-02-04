@@ -80,6 +80,21 @@ const Admin = () => {
         await supabase.auth.signOut();
     };
 
+    const handleDeleteCandidate = async (id) => {
+        if (!window.confirm('Tem certeza que deseja excluir esta inscrição?')) return;
+
+        const { error } = await supabase
+            .from('candidates')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            alert('Erro ao excluir: ' + error.message);
+        } else {
+            setCandidates(prev => prev.filter(c => c.id !== id));
+        }
+    };
+
     if (!session) {
         return (
             <div className="admin-container login-view">
@@ -140,7 +155,16 @@ const Admin = () => {
                             candidates.map((candidate) => (
                                 <div key={candidate.id} className="candidate-card">
                                     <div className="card-header">
-                                        <h3>{candidate.full_name}</h3>
+                                        <div className="card-header-main">
+                                            <h3>{candidate.full_name}</h3>
+                                            <button
+                                                className="delete-btn"
+                                                onClick={() => handleDeleteCandidate(candidate.id)}
+                                                title="Excluir Inscrição"
+                                            >
+                                                Excluir
+                                            </button>
+                                        </div>
                                         <span className="timestamp">
                                             {new Date(candidate.created_at).toLocaleString()}
                                         </span>
