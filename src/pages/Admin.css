@@ -121,6 +121,36 @@
     color: var(--color-wine);
 }
 
+.card-header-main {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.copy-report-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+    color: #666;
+}
+
+.copy-report-btn:hover {
+    background-color: var(--color-gold);
+    color: white;
+    border-color: var(--color-gold);
+}
+
+.copy-report-btn.copied {
+    background-color: #25D366;
+    color: white;
+    border-color: #25D366;
+}
+
 .timestamp {
     font-size: 0.8rem;
     color: #888;
