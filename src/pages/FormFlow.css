@@ -1,0 +1,42 @@
+.form-flow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.section-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+    text-align: center;
+}
+
+.textarea-field {
+    resize: none;
+    font-family: var(--font-serif);
+}
+
+.open-btn {
+    margin-top: 2rem;
+    background-color: var(--color-wine);
+    color: var(--color-gold);
+    border: 1px solid var(--color-gold);
+    padding: 0.8rem 2rem;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.open-btn:hover {
+    background-color: var(--color-gold);
+    color: var(--color-wine);
+}

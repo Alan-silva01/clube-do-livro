@@ -1,0 +1,290 @@
+.book-container {
+    perspective: 1500px;
+    width: var(--book-width);
+    height: var(--book-height);
+    max-width: var(--book-max-width);
+    max-height: var(--book-max-height);
+    position: relative;
+    transition: transform 0.5s;
+    /* Pronounced 3D Shadow */
+    filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.1)) drop-shadow(0 30px 45px rgba(0, 0, 0, 0.15)) drop-shadow(0 0 50px rgba(0, 0, 0, 0.05));
+}
+
+.book {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left center;
+    transition: transform var(--anim-duration) cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform-style: preserve-3d;
+    background-color: var(--color-paper);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1), 1px 1px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.page.flipped {
+    transform: rotateY(-180deg);
+}
+
+.page-front,
+.page-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    padding: 2rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-front {
+    z-index: 2;
+}
+
+.page-back {
+    transform: rotateY(180deg);
+    z-index: 1;
+    background-color: var(--color-paper);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Cover specific styles */
+.cover-front {
+    background-color: var(--color-cover);
+    color: var(--color-ink);
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    position: relative;
+    box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.05);
+    /* Spine shadow */
+}
+
+.cover-back {
+    background-color: var(--color-cover);
+}
+
+/* Content styling */
+.page-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.question-label {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--color-wine);
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-bottom: 2px solid var(--color-wine);
+    background: transparent;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-field:focus {
+    border-bottom-color: var(--color-gold);
+}
+
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.option-btn {
+    padding: 0.8rem;
+    border: 1px solid var(--color-wine);
+    background: transparent;
+    color: var(--color-ink);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+    font-family: var(--font-sans);
+}
+
+.option-btn.selected {
+    background-color: var(--color-wine);
+    color: var(--color-gold);
+}
+
+.nav-buttons {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+}
+
+.btn-nav {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-serif);
+    color: var(--color-wine);
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-nav:hover {
+    text-decoration: underline;
+}
+
+.logo-img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+}
+
+.logo-img-cover {
+    height: auto;
+    margin: 1rem 0;
+}
+
+/* Full-bleed cover overrides */
+.cover-page,
+.cover-page .page-front {
+    padding: 0 !important;
+    background-color: var(--color-cover) !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    /* Allow logo to breath */
+}
+
+.cover-front {
+    background-color: var(--color-cover);
+    color: var(--color-ink);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    border: none !important;
+}
+
+/* Massive Logo Scale */
+.logo-img-cover {
+    width: 110% !important;
+    /* Bursting slightly */
+    max-width: 480px !important;
+    height: auto !important;
+    margin: 0.5rem 0 !important;
+    display: block;
+    z-index: 5;
+    transform: scale(1.2);
+}
+
+/* Ensure spine shadow is on top of cover-front */
+.cover-page::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 15px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.15), transparent);
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Redesigned minimal decorations to avoid crowding the huge logo */
+.decoration-line-tr {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    width: 1.5px;
+    height: 100px;
+    background-color: #000;
+}
+
+.decoration-line-bl {
+    position: absolute;
+    bottom: 20px;
+    left: 25px;
+    width: 1.5px;
+    height: 100px;
+    background-color: #000;
+}
+
+.side-text-left,
+.side-text-right {
+    position: absolute;
+    font-size: 0.5rem;
+    color: #555;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    letter-spacing: 0.5px;
+}
+
+/* Anchored to the far corners */
+.side-text-left {
+    left: 15px;
+    top: 15%;
+    transform: rotate(-90deg) translateX(-50%);
+    transform-origin: left center;
+}
+
+.side-text-right {
+    right: 15px;
+    bottom: 15%;
+    transform: rotate(90deg) translateX(50%);
+    transform-origin: right center;
+}
+
+/* Force Bebas Neue on all cover text */
+.cover-front h1,
+.cover-front p,
+.cover-front h2,
+.open-btn {
+    font-family: var(--font-bebas) !important;
+    text-transform: uppercase;
+}
+
+.open-btn {
+    margin-top: 1.5rem;
+    background-color: #000 !important;
+    color: #fff !important;
+    border: none;
+    padding: 0.8rem 3rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 3px;
+    z-index: 10;
+}
+
+.open-btn:hover {
+    transform: scale(1.05);
+}

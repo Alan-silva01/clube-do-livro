@@ -1,0 +1,55 @@
+:root {
+  --color-paper: #fdfbf7;
+  --color-ink: #2c2c2c;
+  --color-wine: #5e1e1e;
+  --color-gold: #c5a059;
+  --color-cover: #ffffff;
+
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Lato', sans-serif;
+  --font-bebas: 'Bebas Neue', sans-serif;
+
+  /* Responsive Book Dimensions */
+  --book-width: 90vw;
+  --book-height: 80vh;
+  --book-max-width: 450px;
+  --book-max-height: 650px;
+  --anim-duration: 0.8s;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #e5e5e5;
+  /* Soft Gray */
+  color: var(--color-ink);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  /* Prevent scroll */
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+}
+
+input,
+textarea,
+button {
+  font-family: var(--font-sans);
+}
+
+/* Utilities */
+.hidden {
+  display: none;
+}
