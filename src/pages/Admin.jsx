@@ -11,7 +11,6 @@ const Admin = () => {
     const [candidates, setCandidates] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [copiedId, setCopiedId] = useState(null);
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -41,36 +40,25 @@ const Admin = () => {
         setLoading(false);
     };
 
-    const handleCopyReport = async (candidate) => {
-        const report = `
-*RELATÓRIO DE INSCRIÇÃO - CLUBE DO LIVRO*
-----------------------------------------
-*Nome:* ${candidate.full_name}
-*Idade:* ${candidate.age} anos
-*WhatsApp:* ${candidate.phone}
+    const handleShareAll = () => {
+        if (candidates.length === 0) return;
 
-*PERFIL:*
-• *Motivação:* ${candidate.motivation}
-• *Relação c/ Leitura:* ${candidate.reading_relation}
-• *Disponibilidade:* ${candidate.availability}
+        let report = `*RELATÓRIO GERAL - CLUBE DO LIVRO*\n`;
+        report += `Total de Inscritas: ${candidates.length}\n`;
+        report += `----------------------------------------\n\n`;
 
-*CONVIVÊNCIA:*
-• *Em grupo:* ${candidate.group_behavior}
+        candidates.forEach((c, index) => {
+            report += `*${index + 1}. ${c.full_name.toUpperCase()}*\n`;
+            report += `• Idade: ${c.age} anos\n`;
+            report += `• Por que as 3 vagas? ${c.why_match}\n`;
+            report += `• WhatsApp: https://wa.me/55${c.phone.replace(/\D/g, '')}\n\n`;
+        });
 
-*PERGUNTA FINAL:*
-• *Por que ocupar uma das 3 vagas?* 
-${candidate.why_match}
-----------------------------------------
-`.trim();
+        report += `----------------------------------------\n`;
+        report += `_Gerado automaticamente pelo Painel Admin_`;
 
-        try {
-            await navigator.clipboard.writeText(report);
-            setCopiedId(candidate.id);
-            setTimeout(() => setCopiedId(null), 2000);
-        } catch (err) {
-            console.error('Erro ao copiar:', err);
-            alert('Erro ao copiar relatório.');
-        }
+        const encodedReport = encodeURIComponent(report);
+        window.open(`https://wa.me/?text=${encodedReport}`, '_blank');
     };
 
     const handleLogin = async (e) => {
@@ -127,7 +115,12 @@ ${candidate.why_match}
                     <img src={logo} alt="Logo" className="header-logo" />
                     <h1>Painel de Inscrições</h1>
                 </div>
-                <button onClick={handleLogout} className="logout-btn">Sair</button>
+                <div className="header-actions">
+                    <button onClick={handleShareAll} className="share-all-btn">
+                        Compartilhar Tudo no WhatsApp
+                    </button>
+                    <button onClick={handleLogout} className="logout-btn">Sair</button>
+                </div>
             </header>
 
             <div className="content-area">
@@ -143,15 +136,7 @@ ${candidate.why_match}
                             candidates.map((candidate) => (
                                 <div key={candidate.id} className="candidate-card">
                                     <div className="card-header">
-                                        <div className="card-header-main">
-                                            <h3>{candidate.full_name}</h3>
-                                            <button
-                                                className={`copy-report-btn ${copiedId === candidate.id ? 'copied' : ''}`}
-                                                onClick={() => handleCopyReport(candidate)}
-                                            >
-                                                {copiedId === candidate.id ? 'Copiado!' : 'Copiar Relatório'}
-                                            </button>
-                                        </div>
+                                        <h3>{candidate.full_name}</h3>
                                         <span className="timestamp">
                                             {new Date(candidate.created_at).toLocaleString()}
                                         </span>
