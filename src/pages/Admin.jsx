@@ -11,6 +11,9 @@ const Admin = () => {
     const [candidates, setCandidates] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [candidateToDelete, setCandidateToDelete] = useState(null);
+
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -80,20 +83,30 @@ const Admin = () => {
         await supabase.auth.signOut();
     };
 
-    const handleDeleteCandidate = async (id) => {
-        if (!window.confirm('Tem certeza que deseja excluir esta inscrição?')) return;
+    const handleDeleteClick = (id) => {
+        setCandidateToDelete(id);
+        setIsModalOpen(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!candidateToDelete) return;
+
+        setIsModalOpen(false);
+        const idToDelete = candidateToDelete;
+        setCandidateToDelete(null);
 
         const { error } = await supabase
             .from('candidates')
             .delete()
-            .eq('id', id);
+            .eq('id', idToDelete);
 
         if (error) {
             alert('Erro ao excluir: ' + error.message);
         } else {
-            setCandidates(prev => prev.filter(c => c.id !== id));
+            setCandidates(prev => prev.filter(c => c.id !== idToDelete));
         }
     };
+
 
     if (!session) {
         return (
@@ -159,7 +172,7 @@ const Admin = () => {
                                             <h3>{candidate.full_name}</h3>
                                             <button
                                                 className="delete-btn"
-                                                onClick={() => handleDeleteCandidate(candidate.id)}
+                                                onClick={() => handleDeleteClick(candidate.id)}
                                                 title="Excluir Inscrição"
                                             >
                                                 Excluir
@@ -200,8 +213,21 @@ const Admin = () => {
                     </div>
                 )}
             </div>
+            {isModalOpen && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h3>Confirmar Exclusão</h3>
+                        <p>Deseja realmente excluir esta inscrição? Esta ação não pode ser desfeita.</p>
+                        <div className="modal-actions">
+                            <button className="cancel-btn" onClick={() => setIsModalOpen(false)}>Cancelar</button>
+                            <button className="confirm-delete-btn" onClick={confirmDelete}>Excluir Agora</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
+
 
 export default Admin;
