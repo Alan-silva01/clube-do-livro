@@ -25,8 +25,11 @@ const Book = ({ pages, currentPage, onPageTurn }) => {
                     return (
                         <div
                             key={index}
-                            className={`page ${index === 0 ? 'cover-page' : ''} ${isFlipped ? 'flipped' : ''}`}
-                            style={{ zIndex }}
+                            className={`page ${index === 0 ? 'cover-page' : ''} ${isFlipped ? 'flipped' : ''} ${index === currentPage ? 'active' : ''}`}
+                            style={{
+                                zIndex,
+                                transform: isFlipped ? `rotateY(-180deg) translateZ(${zIndex}px)` : `rotateY(0deg) translateZ(${zIndex}px)`
+                            }}
                         >
                             <div className="page-front">
                                 {pageContent.front}
