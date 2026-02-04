@@ -50,12 +50,15 @@ const Admin = () => {
         candidates.forEach((c, index) => {
             report += `*${index + 1}. ${c.full_name.toUpperCase()}*\n`;
             report += `• Idade: ${c.age} anos\n`;
-            report += `• Por que as 3 vagas? ${c.why_match}\n`;
-            report += `• WhatsApp: https://wa.me/55${c.phone.replace(/\D/g, '')}\n\n`;
+            report += `• WhatsApp: ${c.phone}\n`;
+            report += `• Motivação: ${c.motivation}\n`;
+            report += `• Relação c/ Leitura: ${c.reading_relation}\n`;
+            report += `• Disponibilidade: ${c.availability}\n`;
+            report += `• Comportamento em Grupo: ${c.group_behavior}\n`;
+            report += `• Por que as 3 vagas? ${c.why_match}\n\n`;
         });
 
-        report += `----------------------------------------\n`;
-        report += `_Gerado automaticamente pelo Painel Admin_`;
+        report += `----------------------------------------`;
 
         const encodedReport = encodeURIComponent(report);
         window.open(`https://wa.me/?text=${encodedReport}`, '_blank');
