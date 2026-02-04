@@ -117,7 +117,17 @@ const Admin = () => {
                                     </div>
                                     <div className="card-body">
                                         <p><strong>Idade:</strong> {candidate.age}</p>
-                                        <p><strong>WhatsApp:</strong> {candidate.phone}</p>
+                                        <p>
+                                            <strong>WhatsApp:</strong>{" "}
+                                            <a
+                                                href={`https://wa.me/55${candidate.phone.replace(/\D/g, '')}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="whatsapp-link"
+                                            >
+                                                {candidate.phone}
+                                            </a>
+                                        </p>
                                         <p><strong>Relação c/ Leitura:</strong> {candidate.reading_relation}</p>
                                         <p><strong>Disponibilidade:</strong> {candidate.availability}</p>
 

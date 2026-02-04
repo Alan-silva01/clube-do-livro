@@ -36,13 +36,28 @@ const FormFlow = () => {
         }
     };
 
+    const formatPhone = (value) => {
+        if (!value) return value;
+        const phone = value.replace(/\D/g, '');
+        const phoneLen = phone.length;
+        if (phoneLen < 3) return phone;
+        if (phoneLen < 7) return `(${phone.slice(0, 2)}) ${phone.slice(2)}`;
+        return `(${phone.slice(0, 2)}) ${phone.slice(2, 7)}-${phone.slice(7, 11)}`;
+    };
+
     const handleInput = (field, value) => {
-        setFormData(prev => ({ ...prev, [field]: value }));
+        let finalValue = value;
+        if (field === 'phone') {
+            finalValue = formatPhone(value);
+        }
+        setFormData(prev => ({ ...prev, [field]: finalValue }));
     };
 
     const handleSubmit = async () => {
         setIsSubmitting(true);
         try {
+            // Clean phone for database storage if preferred, 
+            // but user asked to show formatted, so we store what they see
             const { error } = await supabase
                 .from('candidates')
                 .insert([formData]);
@@ -259,7 +274,7 @@ const FormFlow = () => {
                 <div className="page-content">
                     <h2 className="section-title">Final</h2>
                     <div>
-                        <div className="question-label">8. Por que seu perfil combina?</div>
+                        <div className="question-label">8. Porque você deveria ocupar uma das 3 vagas do clube?</div>
                         {renderTextarea('why_match', 'Escreva aqui...')}
                     </div>
                     <div className="nav-buttons">
