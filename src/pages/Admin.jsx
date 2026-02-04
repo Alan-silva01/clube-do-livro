@@ -48,14 +48,15 @@ const Admin = () => {
         report += `----------------------------------------\n\n`;
 
         candidates.forEach((c, index) => {
-            report += `*${index + 1}. ${c.full_name.toUpperCase()}*\n`;
-            report += `• Idade: ${c.age} anos\n`;
-            report += `• WhatsApp: ${c.phone}\n`;
-            report += `• Motivação: ${c.motivation}\n`;
-            report += `• Relação c/ Leitura: ${c.reading_relation}\n`;
-            report += `• Disponibilidade: ${c.availability}\n`;
-            report += `• Comportamento em Grupo: ${c.group_behavior}\n`;
-            report += `• Por que as 3 vagas? ${c.why_match}\n\n`;
+            report += `*CANDIDATA Nº ${index + 1}*\n`;
+            report += `*1. Nome Completo:* ${c.full_name.toUpperCase()}\n`;
+            report += `*2. Idade:* ${c.age} anos\n`;
+            report += `*3. WhatsApp:* ${c.phone}\n`;
+            report += `*4. O que te motivou a entrar?*\n${c.motivation}\n`;
+            report += `*5. Sua relação com leitura:* ${c.reading_relation}\n`;
+            report += `*6. Disponibilidade e compromisso:* ${c.availability}\n`;
+            report += `*7. Em grupo, você costuma:* ${c.group_behavior}\n`;
+            report += `*8. Porque você deveria ocupar uma das 3 vagas do clube?*\n${c.why_match}\n\n`;
         });
 
         report += `----------------------------------------`;
