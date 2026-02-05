@@ -180,7 +180,7 @@
 /* Full-bleed cover overrides */
 .cover-page,
 .cover-page .page-front {
-    padding: 1rem !important;
+    padding: 0 !important;
     background-color: var(--color-cover) !important;
     box-shadow: none !important;
     border-radius: 0 !important;
@@ -199,20 +199,18 @@
     text-align: center;
     position: relative;
     border: none !important;
-    padding: 1.5rem;
-    box-sizing: border-box;
     overflow: hidden;
 }
 
-/* Responsive Logo */
+/* Large Logo */
 .logo-img-cover {
-    width: 70% !important;
-    max-width: 280px !important;
+    width: 110% !important;
+    max-width: 480px !important;
     height: auto !important;
     margin: 0.5rem 0 !important;
     display: block;
     z-index: 5;
-    flex-shrink: 0;
+    transform: scale(1.2);
 }
 
 /* Ensure spine shadow is on top of cover-front */
@@ -321,19 +319,20 @@
     font-size: clamp(0.9rem, 2.5vw, 1.1rem) !important;
 }
 
-/* Small screen adjustments */
-@media (max-height: 600px) {
+/* Small screen adjustments - only for very small heights */
+@media (max-height: 550px) {
     .logo-img-cover {
-        width: 50% !important;
-        max-width: 180px !important;
+        width: 80% !important;
+        max-width: 300px !important;
+        transform: scale(1) !important;
     }
 
     .cover-front h1 {
-        font-size: 1.5rem !important;
+        font-size: 2rem !important;
     }
 
     .cover-front h2 {
-        font-size: 1rem !important;
+        font-size: 1.3rem !important;
         margin-bottom: 0.5rem !important;
     }
 
